@@ -1,15 +1,36 @@
 ﻿using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 
-string connectionString = "";
+string connectionString =
+    "";
 string queueName = "appqueue";
 
-//SendMessage("Test message 1");
-//SendMessage("Test message 2");
+// SendMessage("Test message 1");
+// SendMessage("Test message 2");
 
 // PeekMessages();
 
-ReceiveMessages();
+// ReceiveMessages();
+
+SendMessage("Test message 1");
+SendMessage("Test message 2");
+SendMessage("Test message 3");
+
+Console.WriteLine($"The number of messages in the queue '{queueName}' is {GetQueueLength()}");
+
+int GetQueueLength()
+{
+    QueueClient queueClient = new(connectionString, queueName);
+    
+    if (!queueClient.Exists())
+    {
+        //NO MESSAGES IN THE QUEUE
+        return 0;
+    }
+
+    QueueProperties queueProperties = queueClient.GetProperties();
+    return queueProperties.ApproximateMessagesCount;
+}
 
 void ReceiveMessages()
 {
