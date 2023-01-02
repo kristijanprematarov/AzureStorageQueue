@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using StorageQueue;
@@ -8,10 +9,10 @@ string connectionString =
 string queueName = "appqueue";
 
 //*****************OBJECT ORIENTED*****************
-// SendMessage(orderId: "O1", quantity: 100);
-// SendMessage(orderId: "O2", quantity: 200);
+SendMessage(orderId: "O1", quantity: 100);
+SendMessage(orderId: "O2", quantity: 200);
 
-PeekMessages();
+//PeekMessages();
 
 //*****************BASIC TESTS*****************
 // SendMessage("Test message 1");
@@ -39,7 +40,13 @@ void SendMessage(string orderId, int quantity)
             Quantity = quantity
         };
 
-        queueClient.SendMessage(JsonSerializer.Serialize(order));
+        var json = JsonSerializer.Serialize(order);
+
+        byte[] bytes = Encoding.UTF8.GetBytes(json);
+
+        var message = Convert.ToBase64String(bytes);
+
+        queueClient.SendMessage(message);
 
         Console.WriteLine($"Message containing order with id {order.OrderID} has been successfully sent.");
     }
