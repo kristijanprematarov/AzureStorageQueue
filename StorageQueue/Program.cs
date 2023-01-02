@@ -5,7 +5,7 @@ using Azure.Storage.Queues.Models;
 using StorageQueue;
 
 string connectionString =
-    "";
+    " ";
 string queueName = "appqueue";
 
 //*****************OBJECT ORIENTED*****************
