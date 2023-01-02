@@ -4,13 +4,12 @@ using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using StorageQueue;
 
-string connectionString =
-    "";
+string connectionString = "";
 string queueName = "appqueue";
 
 //*****************OBJECT ORIENTED*****************
-//SendMessage(orderId: "O1", quantity: 100);
-//SendMessage(orderId: "O2", quantity: 200);
+SendMessage(orderId: "O1", quantity: 100);
+SendMessage(orderId: "O2", quantity: 200);
 
 PeekMessages();
 
@@ -67,7 +66,11 @@ void PeekMessages()
 
     foreach (var message in peekedMessages)
     {
-        Order order = JsonSerializer.Deserialize<Order>(message.Body.ToString());
+        var base64String = Convert.FromBase64String(message.Body.ToString());
+
+        var stringData = Encoding.UTF8.GetString(base64String);
+
+        Order order = JsonSerializer.Deserialize<Order>(stringData);
 
         Console.WriteLine($"OrderID: {order.OrderID}");
         Console.WriteLine($"Quantity: {order.Quantity}");
