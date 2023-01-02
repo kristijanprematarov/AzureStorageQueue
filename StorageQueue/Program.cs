@@ -7,7 +7,23 @@ string queueName = "appqueue";
 //SendMessage("Test message 1");
 //SendMessage("Test message 2");
 
-PeekMessages();
+// PeekMessages();
+
+ReceiveMessages();
+
+void ReceiveMessages()
+{
+    QueueClient queueClient = new(connectionString, queueName);
+    int maxNumberOfMessagesToGetFromQueue = 10;
+
+    QueueMessage[] queueMessages = queueClient.ReceiveMessages(maxNumberOfMessagesToGetFromQueue);
+
+    foreach (var message in queueMessages)
+    {
+        Console.WriteLine(message.Body);
+        queueClient.DeleteMessage(message.MessageId, message.PopReceipt);
+    }
+}
 
 void PeekMessages()
 {
