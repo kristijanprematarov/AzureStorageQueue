@@ -5,14 +5,14 @@ using Azure.Storage.Queues.Models;
 using StorageQueue;
 
 string connectionString =
-    " ";
+    "";
 string queueName = "appqueue";
 
 //*****************OBJECT ORIENTED*****************
-SendMessage(orderId: "O1", quantity: 100);
-SendMessage(orderId: "O2", quantity: 200);
+//SendMessage(orderId: "O1", quantity: 100);
+//SendMessage(orderId: "O2", quantity: 200);
 
-//PeekMessages();
+PeekMessages();
 
 //*****************BASIC TESTS*****************
 // SendMessage("Test message 1");
